@@ -77,7 +77,7 @@ public class Main extends Application {
 			StackPane stackPane = new StackPane();
 			stackPane = new StackPane();
 			stackPane.setPadding(new Insets(10));
-			stackPane.getChildren().addAll(new Rectangle(500, 500, Color.BLUEVIOLET),new Rectangle(400, 400, Color.CORAL), new Rectangle(300, 300, Color.AQUAMARINE));
+			stackPane.getChildren().addAll(new Rectangle(500, 500, Color.BLUEVIOLET),new Rectangle(400, 400, Color.CORAL), new Rectangle(300, 300, Color.GOLD));
 	       
 	        Scene scene = new Scene(stackPane);
 	        primaryStage.setScene(scene);
