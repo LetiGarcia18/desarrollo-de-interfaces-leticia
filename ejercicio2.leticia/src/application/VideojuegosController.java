@@ -48,7 +48,7 @@ public class VideojuegosController {
 	public ObservableList<String> listaPegis = FXCollections.observableArrayList("3", "12","18");
 	
 	@FXML
-	private void initializate() {
+	private void initialize() {
 		chbConsola.setItems(listaConsolas);
 		chbPegi.setItems(listaPegis);
 		columNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
