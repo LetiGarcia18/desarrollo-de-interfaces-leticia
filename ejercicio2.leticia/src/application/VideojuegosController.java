@@ -4,11 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class VideojuegosController {
@@ -67,17 +69,49 @@ public class VideojuegosController {
 	@FXML 
 	public void aniadirVideojuego(ActionEvent event) {
 		
-		Videojuego videojuego = new Videojuego(txtNombre.getText(), Float.parseFloat(txtPrecio.getText()), chbConsola.getValue().toString(), chbPegi.getValue().toString());
+		
+		if(!txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() && !chbConsola.getSelectionModel().isEmpty() && !chbPegi.getSelectionModel().isEmpty()) {
+            if(isNumeric(txtPrecio.getText())) {
+        		Videojuego videojuego = new Videojuego(txtNombre.getText(), Float.parseFloat(txtPrecio.getText()), chbConsola.getValue().toString(), chbPegi.getValue().toString());
+
+                listaVideojuegos.add(videojuego);
+                txtNombre.clear();
+    			txtPrecio.clear();
+    			chbConsola.getSelectionModel().clearSelection();
+    			chbPegi.getSelectionModel().clearSelection();
+            }else {
+                Alert alerta = new Alert(AlertType.ERROR);
+                alerta.setTitle("Error al insertar");
+                alerta.setHeaderText("No se ha introducido un numero en las paginas.");
+                alerta.setContentText("Por favor, introduzca un numero en las paginas.");
+                alerta.showAndWait();
+            }
+        }else {
+            Alert alerta = new Alert(AlertType.WARNING);
+            alerta.setTitle("Error al insertar");
+            alerta.setHeaderText("Algun/os campo/s esta incompleto.");
+            alerta.setContentText("Por favor, revise el estado de los campos.");
+            alerta.showAndWait();
+        }
 		
 		
-		if(isNumeric(txtPrecio.getText())) {
+		
+		
+		/*if(isNumeric(txtPrecio.getText())) {
 			listaVideojuegos.add(videojuego);
 			
 			txtNombre.clear();
 			txtPrecio.clear();
 			chbConsola.getSelectionModel().clearSelection();
 			chbPegi.getSelectionModel().clearSelection();
-		}
+			
+		}else {
+			Alert alerta = new Alert(AlertType.ERROR);
+			alerta.setTitle("Error al insertar");
+			alerta.setHeaderText("No se ha introducidoun número en el precio");
+			alerta.setContentText("Por favor, introduzca un número para el precio");
+			alerta.showAndWait();
+		}*/
 		
 		
 		
