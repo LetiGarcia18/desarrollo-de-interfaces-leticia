@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -63,17 +65,34 @@ public class IndexController {
 	@FXML 
 	public void aniadirLibro(ActionEvent event) {
 		
-		Libro libro = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(), txtAutor.getText(), Integer.parseInt(txtPaginas.getText()));
 		
-		if(isNumeric(txtPaginas.getText())) {
-			listaLibros.add(libro);
-			
-			txtTitulo.clear();
-			chbEditorial.getSelectionModel().clearSelection(); //Borra la seleccion
-			txtAutor.clear();
-			txtPaginas.clear();
-		}
+		if(!txtTitulo.getText().isEmpty() && !chbEditorial.getValue().toString().isEmpty() && !txtAutor.getText().isEmpty() && !txtPaginas.getText().isEmpty()) {
+            if(isNumeric(txtPaginas.getText())) {
+        		Libro libro = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(), txtAutor.getText(), Integer.parseInt(txtPaginas.getText()));
+
+                listaLibros.add(libro);
+                txtTitulo.clear();
+                txtAutor.clear();
+    			chbEditorial.getSelectionModel().clearSelection();
+    			txtPaginas.clear();
+    			
+            }else {
+                Alert alerta = new Alert(AlertType.ERROR);
+                alerta.setTitle("Error al insertar");
+                alerta.setHeaderText("No se ha introducido un numero en las paginas.");
+                alerta.setContentText("Por favor, introduzca un numero en las paginas.");
+                alerta.showAndWait();
+            }
+        }else {
+            Alert alerta = new Alert(AlertType.WARNING);
+            alerta.setTitle("Error al insertar");
+            alerta.setHeaderText("Algun/os campo/s esta incompleto.");
+            alerta.setContentText("Por favor, revise el estado de los campos.");
+            alerta.showAndWait();
+        }
 		
+		
+		//Si no se introducen todos los datos, se mostrará una alerta warning avisando de que faltan datos. Esto se comprueba lo primero.
 		
 		
 	}
