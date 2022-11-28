@@ -46,6 +46,9 @@ public class VideojuegosController {
 	private Button btAniadir;
 	
 	@FXML
+	private Button btBorrar;
+	
+	@FXML
 	private ObservableList<Videojuego> listaVideojuegos = FXCollections.observableArrayList(new Videojuego("Zelda Breath of the Wild", 50f, "Nintendo Switch", "12"));
 
 	@FXML
@@ -66,59 +69,49 @@ public class VideojuegosController {
 		tableVideojuegos.setItems(listaVideojuegos);
 	}
 	
-	@FXML 
+	@FXML
 	public void aniadirVideojuego(ActionEvent event) {
 		
-		
-		if(!txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() && !chbConsola.getSelectionModel().isEmpty() && !chbPegi.getSelectionModel().isEmpty()) {
-            if(isNumeric(txtPrecio.getText())) {
-        		Videojuego videojuego = new Videojuego(txtNombre.getText(), Float.parseFloat(txtPrecio.getText()), chbConsola.getValue().toString(), chbPegi.getValue().toString());
+		if(txtNombre.getText().isEmpty() || !txtPrecio.getText().isEmpty() || !chbConsola.getSelectionModel().isEmpty() || !chbPegi.getSelectionModel().isEmpty()){
+			Alert alerta = new Alert(AlertType.WARNING);
+			alerta.setTitle("Información incompleta");
+			alerta.setHeaderText("Falta información del videojuego");
+			alerta.setContentText("Por favor, introduce todos los campos");
+			alerta.showAndWait();
 
-                listaVideojuegos.add(videojuego);
-                txtNombre.clear();
-    			txtPrecio.clear();
-    			chbConsola.getSelectionModel().clearSelection();
-    			chbPegi.getSelectionModel().clearSelection();
-            }else {
-                Alert alerta = new Alert(AlertType.ERROR);
-                alerta.setTitle("Error al insertar");
-                alerta.setHeaderText("No se ha introducido un numero en las paginas.");
-                alerta.setContentText("Por favor, introduzca un numero en las paginas.");
-                alerta.showAndWait();
-            }
-        }else {
-            Alert alerta = new Alert(AlertType.WARNING);
-            alerta.setTitle("Error al insertar");
-            alerta.setHeaderText("Algun/os campo/s esta incompleto.");
-            alerta.setContentText("Por favor, revise el estado de los campos.");
-            alerta.showAndWait();
-        }
-		
-		
-		
-		
-		/*if(isNumeric(txtPrecio.getText())) {
-			listaVideojuegos.add(videojuego);
-			
 			txtNombre.clear();
 			txtPrecio.clear();
 			chbConsola.getSelectionModel().clearSelection();
-			chbPegi.getSelectionModel().clearSelection();
-			
-		}else {
+			chbPegi.getSelectionModel().clearSelection(); 
+		
+		
+		}else if (!esNumero(txtPrecio.getText())) {
 			Alert alerta = new Alert(AlertType.ERROR);
 			alerta.setTitle("Error al insertar");
-			alerta.setHeaderText("No se ha introducidoun número en el precio");
-			alerta.setContentText("Por favor, introduzca un número para el precio");
-			alerta.showAndWait();
-		}*/
-		
-		
-		
-		
+			alerta.setHeaderText("No se ha introducido un número en el precio");
+			alerta.setContentText("Por favor, introduzca un número en el campo del precio");
+			alerta.showAndWait(); 
+			
+		}else {
+    		Videojuego videojuego = new Videojuego(txtNombre.getText(), Float.parseFloat(txtPrecio.getText()), chbConsola.getValue().toString(), chbPegi.getValue().toString());
+    		listaVideojuegos.add(videojuego);
+            txtNombre.clear();
+			txtPrecio.clear();
+			chbConsola.getSelectionModel().clearSelection();
+			chbPegi.getSelectionModel().clearSelection();
+		}
+	}	
+	
+	
+	public void borrarVideojuego(ActionEvent event) {
+
+		int indiceSeleccionado = tableVideojuegos.getSelectionModel().getSelectedIndex();
+		tableVideojuegos.getItems().remove(indiceSeleccionado);
+
 	}
 	
-	private static boolean isNumeric(String cadena){
+	
+	private static boolean esNumero(String cadena){
 		try {
 			Float.parseFloat(cadena);
 			return true;

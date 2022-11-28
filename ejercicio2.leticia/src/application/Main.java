@@ -13,7 +13,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Videojuegos.fxml"));
-			Scene scene = new Scene(root,800,500);
+			Scene scene = new Scene(root,1100,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			/*primaryStage.setTitle("videojuegos");
 			primaryStage.getIcons().add(new Image("/application/gamepad.png"));*/

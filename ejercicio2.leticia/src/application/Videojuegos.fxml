@@ -17,9 +17,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.VideojuegosController">
+<BorderPane prefHeight="778.0" prefWidth="921.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.VideojuegosController">
    <top>
-      <MenuBar prefHeight="31.0" prefWidth="470.0" BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="22.0" prefWidth="922.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Inicio">
             <items>
@@ -39,16 +39,16 @@
         </menus>
       </MenuBar>
    </top>
-   <left>
-      <VBox BorderPane.alignment="CENTER">
+   <center>
+      <VBox prefHeight="694.0" prefWidth="866.0" BorderPane.alignment="CENTER">
          <children>
-            <SplitPane dividerPositions="0.5060240963855422">
+            <SplitPane dividerPositions="0.5926086956521739" prefHeight="642.0" prefWidth="1181.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="344.0">
+                <AnchorPane prefHeight="705.0" prefWidth="492.0">
                      <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="418.0" prefWidth="380.0">
+                        <VBox alignment="TOP_CENTER" layoutX="-15.0" prefHeight="704.0" prefWidth="542.0">
                            <children>
-                              <Label contentDisplay="CENTER" prefHeight="83.0" prefWidth="249.0" text="Nuevo videojuego" textAlignment="CENTER" textFill="#1241cf">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="90.0" prefWidth="544.0" text="Nuevo videojuego" textAlignment="CENTER" textFill="#1241cf">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -56,20 +56,20 @@
                                     <Insets />
                                  </VBox.margin>
                                  <padding>
-                                    <Insets left="60.0" />
+                                    <Insets left="60.0" right="10.0" />
                                  </padding>
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="200.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="542.0">
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="58.0" text="Nombre">
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="152.0" text="Nombre">
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
                                     </Label>
-                                    <TextField fx:id="txtNombre" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="211.0">
+                                    <TextField fx:id="txtNombre" prefHeight="26.0" prefWidth="345.0">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -79,14 +79,14 @@
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="93.0" prefHeight="62.0" prefWidth="292.0">
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="93.0" prefHeight="73.0">
                                  <children>
-                                    <Label alignment="CENTER" text="Precio">
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="138.0" text="Precio">
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
                                     </Label>
-                                    <TextField fx:id="txtPrecio" prefHeight="26.0" prefWidth="209.0">
+                                    <TextField fx:id="txtPrecio" prefHeight="28.0" prefWidth="347.0">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -96,56 +96,62 @@
                                     </TextField>
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="155.0" prefHeight="61.0" prefWidth="235.0">
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="155.0" prefHeight="89.0" prefWidth="542.0">
                                  <children>
-                                    <Label fx:id="labelConsola" text="Consola">
+                                    <Label fx:id="labelConsola" alignment="CENTER" prefHeight="18.0" prefWidth="127.0" text="Consola">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <ChoiceBox fx:id="chbConsola" prefHeight="26.0" prefWidth="215.0">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </ChoiceBox>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="216.0" prefHeight="61.0" prefWidth="235.0">
-                                 <children>
-                                    <Label fx:id="labelPegi" text="PEGI">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <ChoiceBox fx:id="chbPegi" prefHeight="26.0" prefWidth="218.0">
+                                    <ChoiceBox fx:id="chbConsola" prefHeight="26.0" prefWidth="346.0">
                                        <HBox.margin>
                                           <Insets left="25.0" />
                                        </HBox.margin>
                                     </ChoiceBox>
                                  </children>
                               </HBox>
-                              <Button fx:id="btAniadir" mnemonicParsing="false" onAction="#aniadirVideojuego" text="Añadir" textAlignment="CENTER" textFill="#0710c1">
-                                 <font>
-                                    <Font name="System Bold" size="21.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                              </Button>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="216.0" prefHeight="83.0" prefWidth="542.0">
+                                 <children>
+                                    <Label fx:id="labelPegi" alignment="CENTER" prefHeight="18.0" prefWidth="128.0" text="PEGI">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <ChoiceBox fx:id="chbPegi" prefHeight="26.0" prefWidth="346.0">
+                                       <HBox.margin>
+                                          <Insets left="25.0" />
+                                       </HBox.margin>
+                                    </ChoiceBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="138.0" prefWidth="542.0">
+                                 <children>
+                                    <Button fx:id="btAniadir" alignment="CENTER" mnemonicParsing="false" onAction="#aniadirVideojuego" text="Añadir">
+                                       <HBox.margin>
+                                          <Insets right="3.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="btBorrar" mnemonicParsing="false" onAction="#borrarVideojuego" text="Borrar">
+                                       <HBox.margin>
+                                          <Insets left="3.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </VBox>
                      </children></AnchorPane>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="403.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="-30.0" prefHeight="100.0" prefWidth="373.0" text="Videojuegos" textAlignment="CENTER" textFill="#a91212">
                            <font>
                               <Font size="23.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="tableVideojuegos" layoutX="-1.0" layoutY="69.0" prefHeight="306.0" prefWidth="370.0">
+                        <TableView fx:id="tableVideojuegos" layoutX="-5.0" layoutY="69.0" prefHeight="383.0" prefWidth="376.0">
                           <columns>
                             <TableColumn fx:id="columNombre" prefWidth="123.99993592500687" text="Nombre" />
                             <TableColumn fx:id="columPrecio" prefWidth="77.60000610351562" text="Precio" />
@@ -158,5 +164,5 @@
             </SplitPane>
          </children>
       </VBox>
-   </left>
+   </center>
 </BorderPane>
