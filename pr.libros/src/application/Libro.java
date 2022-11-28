@@ -20,6 +20,7 @@ public class Libro {
 		this.paginas = new SimpleIntegerProperty(paginas);
 	}
 	
+	
 	public String getTitulo() {
 		return titulo.get();
 	}

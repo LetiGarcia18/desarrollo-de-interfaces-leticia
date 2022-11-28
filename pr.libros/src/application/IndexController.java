@@ -2,7 +2,9 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,6 +40,9 @@ public class IndexController {
 	@FXML
 	private TableColumn<Libro, Integer> columPaginas;
 	
+	@FXML
+	private Button btAniadir;
+	
 	private ObservableList<Libro> listaLibros = FXCollections.observableArrayList(new Libro("La Biblia", "Planeta", "Jesús", 500));
 	
 	//ObservableList --> Refleja los cambios en tiempo real, ya que al modificar esa lista, se cambia todo automaticamente en tiempo real.
@@ -48,10 +53,29 @@ public class IndexController {
 		chbEditorial.setItems(listaEditoriales); //Cuando arranque la aplicación, al ChoiceBox le va a meter la lista de editoriales
 		
 		columTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-		  columEditorial.setCellValueFactory(new PropertyValueFactory<>("editorial"));
-		  columAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
-		  columPaginas.setCellValueFactory(new PropertyValueFactory<>("paginas"));
+		columEditorial.setCellValueFactory(new PropertyValueFactory<>("editorial"));
+		columAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
+		columPaginas.setCellValueFactory(new PropertyValueFactory<>("paginas"));
 		  
-		  tableLibros.setItems(listaLibros);
+		tableLibros.setItems(listaLibros);
+	}
+	
+	@FXML 
+	public void aniadirLibro(ActionEvent event) {
+		
+		Libro libro = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(), txtAutor.getText(), Integer.parseInt(txtPaginas.getText()));
+		
+		listaLibros.add(libro);
+		
+		txtTitulo.clear();
+		chbEditorial.getSelectionModel().clearSelection(); //Borra la seleccion
+		txtAutor.clear();
+		txtPaginas.clear();
+		
+	}
+	
+	@FXML 
+	public void borrarLibro(ActionEvent event) {
+		System.out.println("Borrando libro");
 	}
 }
