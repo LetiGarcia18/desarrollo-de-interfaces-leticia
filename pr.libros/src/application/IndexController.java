@@ -65,13 +65,27 @@ public class IndexController {
 		
 		Libro libro = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(), txtAutor.getText(), Integer.parseInt(txtPaginas.getText()));
 		
-		listaLibros.add(libro);
+		if(isNumeric(txtPaginas.getText())) {
+			listaLibros.add(libro);
+			
+			txtTitulo.clear();
+			chbEditorial.getSelectionModel().clearSelection(); //Borra la seleccion
+			txtAutor.clear();
+			txtPaginas.clear();
+		}
 		
-		txtTitulo.clear();
-		chbEditorial.getSelectionModel().clearSelection(); //Borra la seleccion
-		txtAutor.clear();
-		txtPaginas.clear();
 		
+		
+	}
+	
+	
+	private static boolean isNumeric(String cadena){
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
 	}
 	
 	@FXML 
