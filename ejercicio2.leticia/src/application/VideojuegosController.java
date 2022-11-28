@@ -2,7 +2,9 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,6 +41,9 @@ public class VideojuegosController {
 	private TableColumn<Videojuego, Integer> columPegi;
 	
 	@FXML
+	private Button btAniadir;
+	
+	@FXML
 	private ObservableList<Videojuego> listaVideojuegos = FXCollections.observableArrayList(new Videojuego("Zelda Breath of the Wild", 50f, "Nintendo Switch", "12"));
 
 	@FXML
@@ -57,6 +62,35 @@ public class VideojuegosController {
 		columPegi.setCellValueFactory(new PropertyValueFactory<>("pegi"));
 		  
 		tableVideojuegos.setItems(listaVideojuegos);
+	}
+	
+	@FXML 
+	public void aniadirVideojuego(ActionEvent event) {
+		
+		Videojuego videojuego = new Videojuego(txtNombre.getText(), Float.parseFloat(txtPrecio.getText()), chbConsola.getValue().toString(), chbPegi.getValue().toString());
+		
+		
+		if(isNumeric(txtPrecio.getText())) {
+			listaVideojuegos.add(videojuego);
+			
+			txtNombre.clear();
+			txtPrecio.clear();
+			chbConsola.getSelectionModel().clearSelection();
+			chbPegi.getSelectionModel().clearSelection();
+		}
+		
+		
+		
+		
+	}
+	
+	private static boolean isNumeric(String cadena){
+		try {
+			Float.parseFloat(cadena);
+			return true;
+		} catch (NumberFormatException nfe){
+			return false;
+		}
 	}
 	
 	
