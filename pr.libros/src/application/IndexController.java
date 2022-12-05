@@ -1,5 +1,12 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.mysql.cj.xdevapi.Result;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,8 +72,47 @@ public class IndexController {
 		columEditorial.setCellValueFactory(new PropertyValueFactory<>("editorial"));
 		columAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
 		columPaginas.setCellValueFactory(new PropertyValueFactory<>("paginas"));
+		
+		//Almacenamos en esta variable la lista de libros de la BD
+		ObservableList listaLibrosBD = getLibrosBD();
 
-		tableLibros.setItems(listaLibros);
+		tableLibros.setItems(listaLibrosBD);
+	}
+	
+	private ObservableList<Libro> getLibrosBD(){
+		
+		//Creamos la ObservableList donde almacenaremos los libros obtenidos de la BD
+		ObservableList<Libro> listaLibrosBD = FXCollections.observableArrayList();
+		
+		//Nos conectamos a la BD
+		DatabaseConnection bdConnection = new DatabaseConnection();
+		Connection connection = bdConnection.getConnection();
+		
+		String query = "select * from libros";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Libro libro = new Libro(rs.getString("titulo"), rs.getString("editorial"), rs.getString("autor"), rs.getInt("paginas"));
+				listaLibros.add(libro);
+			}
+			
+			//cerramos la conexion
+			connection.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+	
+		
+		
+		
+		
+		
+		return listaLibrosBD;
 	}
 
 	@FXML
@@ -101,45 +147,6 @@ public class IndexController {
 			txtPaginas.clear(); 
 		}
 		
-		
-		
-		
-		
-		/*if (esNumero(txtPaginas.getText())) {
-			Libro libro = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(),txtAutor.getText(),	Integer.parseInt(txtPaginas.getText()));
-			
-			if (txtTitulo.getText().isEmpty() || chbEditorial.getSelectionModel().isEmpty() ||	txtAutor.getText().isEmpty() ||	txtPaginas.getText().isEmpty()) {
-
-				Alert alerta = new Alert(AlertType.WARNING);
-				alerta.setTitle("Información incompleta");
-				alerta.setHeaderText("Falta información del libro");
-				alerta.setContentText("Por favor, introduce todos los campos");
-				alerta.showAndWait();
-
-				txtTitulo.clear();
-				chbEditorial.getSelectionModel().clearSelection();
-				txtAutor.clear();
-				txtPaginas.clear(); 
-			} else {
-				if (esNumero(txtPaginas.getText())) {
-					Libro libro2 = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(), txtAutor.getText(), Integer.parseInt(txtPaginas.getText()));
-
-					listaLibros.add(libro2);
-
-					txtTitulo.clear();
-					chbEditorial.getSelectionModel().clearSelection();
-					txtAutor.clear();
-					txtPaginas.clear();
-
-				} else {
-					Alert alerta = new Alert(AlertType.ERROR);
-					alerta.setTitle("Error al insertar");
-					alerta.setHeaderText("No se ha introducido un número en las páginas");
-					alerta.setContentText("Por favor, introduzca un número en las páginas");
-					alerta.showAndWait();
-				}
-			}
-		}*/
 	}
 
 		
@@ -147,7 +154,18 @@ public class IndexController {
 	public void borrarLibro(ActionEvent event) {
 
 		int indiceSeleccionado = tableLibros.getSelectionModel().getSelectedIndex();
-		tableLibros.getItems().remove(indiceSeleccionado);
+		System.out.println("Indice a borrar: " + indiceSeleccionado);
+		if(indiceSeleccionado <= -1) {
+			//Alerta error
+			Alert alerta = new Alert(AlertType.ERROR);
+			alerta.setTitle("Error al borrar");
+			alerta.setHeaderText("No se ha podido borrar el elemento");
+			alerta.setContentText("Por favor, seleccione el elemento que quiere borrar");
+			alerta.showAndWait(); 
+		}else {
+			tableLibros.getItems().remove(indiceSeleccionado);
+			tableLibros.getSelectionModel().clearSelection();
+		}
 
 	}
 
