@@ -19,6 +19,8 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("/application/gamepad.png"));*/
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
