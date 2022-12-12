@@ -55,8 +55,7 @@ public class IndexController {
 	@FXML
 	private Button btBorrar;
 
-	private ObservableList<Libro> listaLibros = FXCollections
-			.observableArrayList(new Libro("La Biblia", "Planeta", "Jesús", 500));
+	private ObservableList<Libro> listaLibros = FXCollections.observableArrayList();
 
 	// ObservableList --> Refleja los cambios en tiempo real, ya que al modificar
 	// esa lista, se cambia todo automaticamente en tiempo real.
@@ -72,6 +71,8 @@ public class IndexController {
 		columEditorial.setCellValueFactory(new PropertyValueFactory<>("editorial"));
 		columAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
 		columPaginas.setCellValueFactory(new PropertyValueFactory<>("paginas"));
+		
+		tableLibros.setItems(listaLibros); 
 		
 		//Almacenamos en esta variable la lista de libros de la BD
 		ObservableList listaLibrosBD = getLibrosBD();
@@ -95,7 +96,7 @@ public class IndexController {
 			
 			while (rs.next()) {
 				Libro libro = new Libro(rs.getString("titulo"), rs.getString("editorial"), rs.getString("autor"), rs.getInt("paginas"));
-				listaLibros.add(libro);
+				listaLibrosBD.add(libro);
 			}
 			
 			//cerramos la conexion
@@ -104,16 +105,9 @@ public class IndexController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-	
-		
-		
-		
-		
-		
 		return listaLibrosBD;
 	}
+	
 
 	@FXML
 	public void aniadirLibro(ActionEvent event) {
@@ -140,11 +134,42 @@ public class IndexController {
 			
 		}else {
 			Libro libro = new Libro(txtTitulo.getText(), chbEditorial.getValue().toString(),txtAutor.getText(),	Integer.parseInt(txtPaginas.getText()));
-			listaLibros.add(libro);
+			//listaLibros.add(libro);
+			//tableLibros.setItems(listaLibros);
+			
+			
 			txtTitulo.clear();
 			chbEditorial.getSelectionModel().clearSelection();
 			txtAutor.clear();
 			txtPaginas.clear(); 
+			
+			//Nos conectamos a la BD
+			DatabaseConnection bdConnection = new DatabaseConnection();
+			Connection connection = bdConnection.getConnection();
+			
+			
+			try {
+				//Aquí insertamos en la bbdd
+				String query = "insert into libros (titulo, editorial, autor, paginas) values (?,?,?,?)";
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setString(1, libro.getTitulo());
+				ps.setString(2, libro.getEditorial());
+				ps.setString(3, libro.getAutor());
+				ps.setInt(4, libro.getPaginas());
+				ps.executeUpdate();
+				
+						
+				
+				//Cerramos la sesión
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//Después de insertar actualizamos la tabla
+			ObservableList listaLibrosBD = getLibrosBD();
+
+			tableLibros.setItems(listaLibrosBD);
 		}
 		
 	}
