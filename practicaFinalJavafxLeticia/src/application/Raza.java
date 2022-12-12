@@ -1,24 +1,30 @@
 package application;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Raza {
 	
 	private int id;
-	private String nombre;
-	private String habitat;
-	private boolean esPeligrosa;
+	
+	private SimpleStringProperty nombre;
+	
+	private SimpleStringProperty habitat;
+	
+	private SimpleBooleanProperty esPeligrosa;
 	
 	public Raza(String nombre, String habitat, boolean esPeligrosa) {
-		this.nombre = nombre;
-		this.habitat = habitat;
-		this.esPeligrosa = esPeligrosa;
+		this.nombre = new SimpleStringProperty(nombre);
+		this.habitat = new SimpleStringProperty(habitat);
+		this.esPeligrosa = new SimpleBooleanProperty(esPeligrosa);
 	}
 
 	
 	public Raza(int id, String nombre, String habitat, boolean esPeligrosa) {
 		this.id = id;
-		this.nombre = nombre;
-		this.habitat = habitat;
-		this.esPeligrosa = esPeligrosa;
+		this.nombre = new SimpleStringProperty(nombre);
+		this.habitat = new SimpleStringProperty(habitat);
+		this.esPeligrosa = new SimpleBooleanProperty(esPeligrosa);
 	}
 
 
@@ -27,53 +33,34 @@ public class Raza {
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
 	public String getNombre() {
-		return nombre;
+		return nombre.get();
 	}
 
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombre = new SimpleStringProperty(nombre);
 	}
 
 
 	public String getHabitat() {
-		return habitat;
+		return habitat.get();
 	}
 
 
 	public void setHabitat(String habitat) {
-		this.habitat = habitat;
+		this.habitat = new SimpleStringProperty(habitat);
 	}
 
 
 	public boolean isEsPeligrosa() {
-		return esPeligrosa;
+		return esPeligrosa.get();
 	}
 
 
 	public void setEsPeligrosa(boolean esPeligrosa) {
-		this.esPeligrosa = esPeligrosa;
+		this.esPeligrosa = new SimpleBooleanProperty(esPeligrosa);
 	}
 
-
-
-	@Override
-	public String toString() {
-		String peligrosa = "";
-		
-		if(esPeligrosa) {
-			peligrosa = "Si";
-		}else {
-			peligrosa = "No";
-		}
-		
-		return "Raza --> \nid: " + id + "\nNombre: " + nombre + "\nHabitat: " + habitat + "\nEs peligrosa: " + peligrosa;
-	}
 
 }
