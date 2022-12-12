@@ -95,7 +95,7 @@ public class IndexController {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				Libro libro = new Libro(rs.getString("titulo"), rs.getString("editorial"), rs.getString("autor"), rs.getInt("paginas"));
+				Libro libro = new Libro(rs.getInt("id"), rs.getString("titulo"), rs.getString("editorial"), rs.getString("autor"), rs.getInt("paginas"));
 				listaLibrosBD.add(libro);
 			}
 			
@@ -188,8 +188,37 @@ public class IndexController {
 			alerta.setContentText("Por favor, seleccione el elemento que quiere borrar");
 			alerta.showAndWait(); 
 		}else {
-			tableLibros.getItems().remove(indiceSeleccionado);
-			tableLibros.getSelectionModel().clearSelection();
+			//tableLibros.getItems().remove(indiceSeleccionado);
+			//tableLibros.getSelectionModel().clearSelection();
+			
+			//Nos conectamos a la BD
+			DatabaseConnection bdConnection = new DatabaseConnection();
+			Connection connection = bdConnection.getConnection();
+			
+			
+			try {
+				//Aqui borramos los datos
+				String query = "delete from libros where id = ?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				Libro libro = tableLibros.getSelectionModel().getSelectedItem();
+				ps.setInt(1, libro.getId());
+				ps.executeUpdate();
+				
+				tableLibros.getSelectionModel().clearSelection();
+				
+				//Después de insertar actualizamos la tabla
+				ObservableList listaLibrosBD = getLibrosBD();
+
+				tableLibros.setItems(listaLibrosBD);
+				
+				//Cerramos la conexion
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 		}
 
 	}
