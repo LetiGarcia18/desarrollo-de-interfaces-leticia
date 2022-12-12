@@ -94,7 +94,7 @@ public class VideojuegosController {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Videojuego videojuego = new Videojuego(rs.getString("nombre"), (float) rs.getFloat("precio"), rs.getString("consola"),
+				Videojuego videojuego = new Videojuego(rs.getInt("id"), rs.getString("nombre"), (float) rs.getFloat("precio"), rs.getString("consola"),
 						rs.getInt("pegi")+"");
 				listaVideojuegosBD.add(videojuego);
 			}
@@ -184,8 +184,35 @@ public class VideojuegosController {
 			alerta.setContentText("Por favor, seleccione el elemento que quiere borrar");
 			alerta.showAndWait();
 		} else {
-			tableVideojuegos.getItems().remove(indiceSeleccionado);
-			tableVideojuegos.getSelectionModel().clearSelection();
+			//tableVideojuegos.getItems().remove(indiceSeleccionado);
+			//tableVideojuegos.getSelectionModel().clearSelection();
+			
+			//Nos conectamos a la BD
+			DatabaseConnection bdConnection = new DatabaseConnection();
+			Connection connection = bdConnection.getConnection();
+			
+			
+			try {
+				//Aqui borramos los datos
+				String query = "delete from videojuegos where id = ?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				Videojuego videojuego = tableVideojuegos.getSelectionModel().getSelectedItem();
+				ps.setInt(1, videojuego.getId());
+				ps.executeUpdate();
+				
+				tableVideojuegos.getSelectionModel().clearSelection();
+				
+				//Después de insertar actualizamos la tabla
+				ObservableList listaLibrosBD = getVideojuegosBD();
+
+				tableVideojuegos.setItems(listaLibrosBD);
+				
+				//Cerramos la conexion
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
