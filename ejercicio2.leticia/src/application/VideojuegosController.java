@@ -94,7 +94,7 @@ public class VideojuegosController {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Videojuego videojuego = new Videojuego(rs.getString("nombre"), (float) rs.getInt("precio"), rs.getString("consola"),
+				Videojuego videojuego = new Videojuego(rs.getString("nombre"), (float) rs.getFloat("precio"), rs.getString("consola"),
 						rs.getInt("pegi")+"");
 				listaVideojuegosBD.add(videojuego);
 			}
@@ -111,8 +111,8 @@ public class VideojuegosController {
 	@FXML
 	public void aniadirVideojuego(ActionEvent event) {
 
-		if (txtNombre.getText().isEmpty() || !txtPrecio.getText().isEmpty() || !chbConsola.getSelectionModel().isEmpty()
-				|| !chbPegi.getSelectionModel().isEmpty()) {
+		if (txtNombre.getText().isEmpty() || txtPrecio.getText().isEmpty() || chbConsola.getSelectionModel().isEmpty()
+				|| chbPegi.getSelectionModel().isEmpty()) {
 			Alert alerta = new Alert(AlertType.WARNING);
 			alerta.setTitle("Información incompleta");
 			alerta.setHeaderText("Falta información del videojuego");
@@ -139,7 +139,38 @@ public class VideojuegosController {
 			txtPrecio.clear();
 			chbConsola.getSelectionModel().clearSelection();
 			chbPegi.getSelectionModel().clearSelection();
+			
+			//Nos conectamos a la BD
+			DatabaseConnection bdConnection = new DatabaseConnection();
+			Connection connection = bdConnection.getConnection();
+			
+			
+			try {
+				//Aquí insertamos en la bbdd
+				String query = "insert into videojuegos (nombre, precio, consola, pegi) values (?,?,?,?)";
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setString(1, videojuego.getNombre());
+				ps.setFloat(2, videojuego.getPrecio());
+				ps.setString(3, videojuego.getConsola());
+				ps.setString(4, videojuego.getPegi());
+				ps.executeUpdate();
+				
+						
+				
+				//Cerramos la sesión
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//Después de insertar actualizamos la tabla
+			ObservableList listaVideojuegosBD = getVideojuegosBD();
+
+			tableVideojuegos.setItems(listaVideojuegosBD);
+			
 		}
+		
+		
 	}
 
 	public void borrarVideojuego(ActionEvent event) {
