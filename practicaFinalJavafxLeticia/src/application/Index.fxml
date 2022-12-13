@@ -19,8 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="application.IndexController">
+<BorderPane id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.IndexController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -45,7 +44,7 @@
    <center>
       <SplitPane dividerPositions="0.5050403225806452" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane id="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="anchorPaneLeft" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <BorderPane prefHeight="372.8" prefWidth="299.2">
                      <top>
@@ -108,7 +107,7 @@
                                     <Insets left="70.0" right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="btBorrar" mnemonicParsing="false" onAction="#borrarLibro" text="Borrar">
+                              <Button fx:id="btBorrar" mnemonicParsing="false" onAction="#borrarRaza" text="Borrar">
                                  <HBox.margin>
                                     <Insets left="30.0" />
                                  </HBox.margin>
@@ -119,7 +118,7 @@
                   </BorderPane>
                </children>
             </AnchorPane>
-          <AnchorPane prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="anchorPaneRigth" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <BorderPane prefHeight="373.0" prefWidth="352.0">
                      <top>

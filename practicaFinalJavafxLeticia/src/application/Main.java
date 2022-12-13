@@ -7,8 +7,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
-
+/**
+ * Clase principal de la práctica final de JavaFx
+ * @author Leticia
+ *
+ */
 public class Main extends Application {
+	/**
+	 * Función que inicia y hace visible la ventana de la interfaz gráfica
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -18,14 +25,17 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Las razas del mundo");
 			primaryStage.setResizable(false);
-			//primaryStage.getIcons().add(new Image("/aplicacion/emoji_cat_icon_229589.png"));
+			primaryStage.getIcons().add(new Image("/application/cat.png"));
 			primaryStage.show();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Función que lanza el programa
+	 * @param args Sin uso
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
