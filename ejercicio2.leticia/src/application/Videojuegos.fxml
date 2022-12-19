@@ -44,7 +44,7 @@
          <children>
             <SplitPane dividerPositions="0.5926086956521739" prefHeight="642.0" prefWidth="1181.0">
               <items>
-                <AnchorPane prefHeight="705.0" prefWidth="492.0">
+                <AnchorPane id="anchorPaneLeft" prefHeight="705.0" prefWidth="492.0">
                      <children>
                         <VBox alignment="TOP_CENTER" layoutX="-15.0" prefHeight="704.0" prefWidth="542.0">
                            <children>
